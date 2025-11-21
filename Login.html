@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roomify - Login e Consulta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #007BFF;
+            --blue-dark: #0069D9;
+            --bg-light: #F8F9FA;
+            --bg-white: #FFFFFF;
+            --text-dark: #212529;
+            --text-light: #6C757D;
+            --border-color: #DEE2E6;
+            --radius-md: 8px;
+            --radius-lg: 16px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .main-container {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            width: 100%;
+            max-width: 1100px;
+            min-height: 650px;
+            background-color: var(--bg-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .student-section { padding: 3rem; display: flex; flex-direction: column; }
+        .student-section h2 { font-size: 1.75rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .student-section p { color: var(--text-light); margin-bottom: 2rem; }
+        .filter-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: flex-end; margin-bottom: 2rem; }
+        .form-group { width: 100%; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; }
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background-color: var(--bg-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236C757D' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem; border: none; border-radius: var(--radius-md); font-weight: 600;
+            cursor: pointer; transition: background-color 0.2s ease; font-size: 0.95rem;
+            text-decoration: none; display: inline-block; text-align: center; height: fit-content;
+        }
+        .btn-primary { background-color: var(--blue); color: white; }
+        .btn-primary:hover { background-color: var(--blue-dark); }
+        .schedule-table { width: 100%; border-collapse: collapse; }
+        .schedule-table th, .schedule-table td { padding: 1rem 0; border-bottom: 1px solid var(--border-color); text-align: left; }
+        .schedule-table th { color: var(--text-light); font-weight: 500; font-size: 0.9rem; }
+        .room-tag { background-color: #E6F2FF; color: var(--blue); padding: 0.3rem 0.8rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; }
+        .login-section {
+            background-color: var(--bg-light); padding: 3rem; display: flex;
+            flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        .login-header .logo-icon { width: 50px; height: 50px; margin-bottom: 1rem; }
+        .login-header h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .login-header p { color: var(--text-light); margin-bottom: 2.5rem; max-width: 250px; }
+        .login-form { width: 100%; max-width: 300px; }
+        .login-form .form-group { text-align: left; }
+        .login-form .form-group input {
+            width: 100%; padding: 0.85rem; border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); font-family: 'Inter', sans-serif; font-size: 1rem;
+            background-color: var(--bg-white);
+        }
+        .login-form .btn { width: 100%; padding: 0.85rem; margin-top: 1rem; font-size: 1rem; }
+        @media (max-width: 992px) { .main-container { grid-template-columns: 1fr; height: auto; max-height: none; } }
+        @media (max-width: 768px) {
+            body { padding: 0; } .main-container { border-radius: 0; min-height: 100vh; }
+            .student-section, .login-section { padding: 2rem; }
+            .filter-form { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <section class="student-section">
+            <h2>Consulte sua Sala</h2>
+            <p>Selecione seu curso e período para ver o local das suas aulas.</p>
+            <form class="filter-form">
+                <div class="form-group">
+                    <label for="student-course">Curso</label>
+                    <select id="student-course"><option>Engenharia Civil</option></select>
+                </div>
+                <div class="form-group">
+                    <label for="student-period">Período</label>
+                    <select id="student-period"><option>1º Período</option></select>
+                </div>
+                <button type="button" class="btn btn-primary">Buscar</button>
+            </form>
+            <div class="schedule-result">
+                <table class="schedule-table">
+                    <thead><tr><th>Horário</th><th>Matéria</th><th>Sala</th></tr></thead>
+                    <tbody>
+                        <tr><td>19:00 - 20:40</td><td>Probabilidade e Estatística</td><td><span class="room-tag">Sala 301</span></td></tr>
+                        <tr><td>20:50 - 22:30</td><td>Cálculo II</td><td><span class="room-tag">Sala 303</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section class="login-section">
+            <div class="login-header">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="#007BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 7L12 12L22 7" stroke="#007BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12V22" stroke="#007BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 9L4 15" stroke="#007BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 9L20 15" stroke="#007BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <h2>Roomify</h2>
+                <p>Acesso para administradores e coordenadores.</p>
+            </div>
+            <form class="login-form">
+                <div class="form-group"><label for="email">Email</label><input type="email" id="email"></div><br>
+                <div class="form-group"><label for="password">Senha</label><input type="password" id="password"></div>
+                <a href="index.html" class="btn btn-primary">Entrar</a>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

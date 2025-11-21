@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roomify - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue: #007bff;
+        --blue-dark: #0069d9;
+        --bg-light: #f8f9fa;
+        --bg-white: #ffffff;
+        --text-dark: #212529;
+        --text-light: #6c757d;
+        --border-color: #dee2e6;
+        --radius-md: 8px;
+        --radius-lg: 16px;
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg-light);
+        display: flex;
+      }
+      .sidebar {
+        width: 260px;
+        background-color: var(--bg-white);
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+        border-right: 1px solid var(--border-color);
+        flex-shrink: 0;
+      }
+      .sidebar-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding-left: 0.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .sidebar-header i {
+        font-size: 2rem;
+        color: var(--blue);
+      }
+      .sidebar-header h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+      .sidebar-nav {
+        flex-grow: 1;
+      }
+      .sidebar-nav a {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.8rem 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        color: var(--text-light);
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+      .sidebar-nav a i {
+        font-size: 1.25rem;
+      }
+      .sidebar-nav a:hover {
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+      .sidebar-nav a.active {
+        background-color: var(--blue);
+        color: white;
+      }
+      .main-content {
+        flex-grow: 1;
+        padding: 2rem;
+        overflow-y: auto;
+        height: 100vh;
+      }
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+      .greeting h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+      .greeting p {
+        color: var(--text-light);
+      }
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .user-profile img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+      }
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+      .action-card {
+        background-color: var(--bg-white);
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+        border-radius: var(--radius-lg);
+        transition: all 0.2s ease;
+      }
+      .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow);
+      }
+      .action-card i {
+        font-size: 1.5rem;
+        color: var(--blue);
+        background-color: #e6f2ff;
+        padding: 0.75rem;
+        border-radius: var(--radius-md);
+        margin-bottom: 1rem;
+      }
+      .action-card h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .action-card p {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+      .action-card a {
+        text-decoration: none;
+        color: var(--blue);
+        font-weight: 600;
+      }
+      .schedule-section {
+        margin-top: 2.5rem;
+        background-color: var(--bg-white);
+        padding: 2rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-color);
+      }
+      .schedule-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+      .schedule-header h3 {
+        font-size: 1.4rem;
+      }
+      .schedule-header a {
+        text-decoration: none;
+        color: var(--blue);
+        font-weight: 600;
+      }
+      .schedule-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .schedule-table th,
+      .schedule-table td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border-color);
+        text-align: left;
+      }
+      .schedule-table th {
+        color: var(--text-light);
+        font-weight: 500;
+      }
+      .schedule-item {
+        background-color: var(--bg-light);
+        padding: 0.8rem;
+        border-radius: var(--radius-md);
+        border-left: 4px solid var(--blue);
+      }
+      .schedule-item .class-name {
+        font-weight: 600;
+      }
+      .schedule-item .class-details {
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+      @media (max-width: 992px) {
+        .sidebar {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <i class="ri-building-line"></i>
+        <h1>Roomify</h1>
+      </header>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="active"
+          ><i class="ri-home-5-line"></i> Home</a
+        >
+        <a href="agenda-semanal.html"
+          ><i class="ri-calendar-line"></i> Agenda Semanal</a
+        >
+        <a href="atribuir-sala-1.html"
+          ><i class="ri-add-box-line"></i> Atribuir Sala</a
+        >
+        <a href="gerenciar-materias.html"
+          ><i class="ri-book-open-line"></i> Gerenciar Matérias</a
+        >
+        <a href="gerenciar-salas.html"
+          ><i class="ri-slideshow-3-line"></i> Gerenciar Salas</a
+        >
+        <a href="configuracoes.html"
+          ><i class="ri-settings-3-line"></i> Configurações</a
+        >
+      </nav>
+      <a href="login.html"><i class="ri-logout-box-r-line"></i> Sair</a>
+    </aside>
+    <main class="main-content">
+      <header class="main-header">
+        <div class="greeting">
+          <h2>Bem-vinda, Emeli!</h2>
+          <p>Aqui está o resumo do seu dia.</p>
+        </div>
+        <div class="user-profile">
+          <span>Emeli</span
+          ><img
+            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+            alt="Foto do usuário"
+          />
+        </div>
+      </header>
+      <section class="quick-actions">
+        <div class="action-card">
+          <i class="ri-add-box-line"></i>
+          <h3>Reservar uma sala</h3>
+          <p>
+            Aloque uma matéria em uma sala disponível de forma rápida e com
+            filtros inteligentes.
+          </p>
+          <a href="atribuir-sala-1.html">Começar →</a>
+        </div>
+        <div class="action-card">
+          <i class="ri-slideshow-3-line"></i>
+          <h3>Gerenciar Salas</h3>
+          <p>Adicione, edite ou remova salas e laboratórios do sistema.</p>
+          <a href="gerenciar-salas.html">Acessar →</a>
+        </div>
+        <div class="action-card">
+          <i class="ri-book-open-line"></i>
+          <h3>Gerenciar Matérias</h3>
+          <p>Cadastre e gerencie as matérias e turmas de todos os cursos.</p>
+          <a href="gerenciar-materias.html">Acessar →</a>
+        </div>
+      </section>
+      <section class="schedule-section">
+        <div class="schedule-header">
+          <h3>Agenda de Hoje</h3>
+          <a href="agenda-semanal.html">Ver agenda completa</a>
+        </div>
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Horário</th>
+              <th>Sala 201</th>
+              <th>Sala 305 (Lab)</th>
+              <th>Auditório</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>08:00 - 10:00</td>
+              <td>
+                <div class="schedule-item">
+                  <div class="class-name">Cálculo I</div>
+                  <div class="class-details">Eng. Civil - 1º Período</div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>10:00 - 12:00</td>
+              <td></td>
+              <td>
+                <div class="schedule-item">
+                  <div class="class-name">Química Orgânica</div>
+                  <div class="class-details">Farmácia - 2º Período</div>
+                </div>
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

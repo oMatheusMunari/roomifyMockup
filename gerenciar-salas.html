@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roomify - Gerenciar Salas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #007BFF; --blue-dark: #0069D9; --bg-light: #F8F9FA; --bg-white: #FFFFFF;
+            --text-dark: #212529; --text-light: #6C757D; --border-color: #DEE2E6; --radius-md: 8px;
+            --radius-lg: 16px; --shadow: 0 4px 20px rgba(0, 0, 0, 0.05); --danger: #DC3545;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); display: flex; }
+        .sidebar {
+            width: 260px; background-color: var(--bg-white); height: 100vh;
+            display: flex; flex-direction: column; padding: 1.5rem; border-right: 1px solid var(--border-color); flex-shrink: 0;
+        }
+        .sidebar-header { display: flex; align-items: center; gap: 0.75rem; padding-left: 0.5rem; margin-bottom: 2.5rem; }
+        .sidebar-header i { font-size: 2rem; color: var(--blue); }
+        .sidebar-header h1 { font-size: 1.5rem; font-weight: 700; color: var(--text-dark); }
+        .sidebar-nav { flex-grow: 1; }
+        .sidebar-nav a {
+            display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem; border-radius: var(--radius-md); text-decoration: none;
+            color: var(--text-light); font-weight: 500; transition: all 0.2s ease;
+        }
+        .sidebar-nav a i { font-size: 1.25rem; }
+        .sidebar-nav a:hover { background-color: var(--bg-light); color: var(--text-dark); }
+        .sidebar-nav a.active { background-color: var(--blue); color: white; }
+        .main-content { flex-grow: 1; padding: 2rem; overflow-y: auto; height: 100vh; }
+        .main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .main-header h2 { font-size: 1.8rem; font-weight: 600; }
+        .btn {
+            padding: 0.7rem 1.2rem; border: none; border-radius: var(--radius-md); font-weight: 600;
+            cursor: pointer; transition: background-color 0.2s ease; font-size: 0.9rem;
+            display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;
+        }
+        .btn-primary { background-color: var(--blue); color: white; }
+        .btn-primary:hover { background-color: var(--blue-dark); }
+        .data-card { background-color: var(--bg-white); padding: 1rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th, .data-table td { padding: 1.25rem; border-bottom: 1px solid var(--border-color); text-align: left; }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table th { color: var(--text-light); font-weight: 500; font-size: 0.9rem; text-transform: uppercase; }
+        .actions-cell { text-align: right; }
+        .actions-cell a, .actions-cell button {
+            background: none; border: none; cursor: pointer; color: var(--text-light);
+            font-size: 1.25rem; margin-left: 1rem; transition: color 0.2s ease; text-decoration: none;
+        }
+        .actions-cell a:hover { color: var(--blue); }
+        .actions-cell button.delete:hover { color: var(--danger); }
+        @media (max-width: 992px) { .sidebar { display: none; } }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <header class="sidebar-header"><i class="ri-building-line"></i><h1>Roomify</h1></header>
+        <nav class="sidebar-nav">
+            <a href="index.html"><i class="ri-home-5-line"></i> Home</a>
+            <a href="agenda-semanal.html"><i class="ri-calendar-line"></i> Agenda Semanal</a>
+            <a href="atribuir-sala-1.html"><i class="ri-add-box-line"></i> Atribuir Sala</a>
+            <a href="gerenciar-materias.html"><i class="ri-book-open-line"></i> Gerenciar Matérias</a>
+            <a href="gerenciar-salas.html" class="active"><i class="ri-slideshow-3-line"></i> Gerenciar Salas</a>
+            <a href="configuracoes.html"><i class="ri-settings-3-line"></i> Configurações</a>
+        </nav>
+        <a href="login.html"><i class="ri-logout-box-r-line"></i> Sair</a>
+    </aside>
+    <main class="main-content">
+        <header class="main-header">
+            <h2>Gerenciamento de Salas</h2>
+            <a href="adicionar-sala.html" class="btn btn-primary"><i class="ri-add-line"></i> Adicionar Nova Sala</a>
+        </header>
+        <div class="data-card">
+            <table class="data-table">
+                <thead><tr><th>Nome / Número</th><th>Bloco</th><th>Capacidade</th><th>Tipo</th><th style="text-align: right;">Ações</th></tr></thead>
+                <tbody>
+                    <tr><td>Sala 101</td><td>Bloco A</td><td>50</td><td>Sala Comum</td><td class="actions-cell"><a href="editar-sala.html"><i class="ri-pencil-line"></i></a><button class="delete"><i class="ri-delete-bin-line"></i></button></td></tr>
+                    <tr><td>Sala 102</td><td>Bloco A</td><td>45</td><td>Sala Comum</td><td class="actions-cell"><a href="editar-sala.html"><i class="ri-pencil-line"></i></a><button class="delete"><i class="ri-delete-bin-line"></i></button></td></tr>
+                    <tr><td>Lab. Info I</td><td>Bloco C</td><td>40</td><td>Laboratório de Informática</td><td class="actions-cell"><a href="editar-sala.html"><i class="ri-pencil-line"></i></a><button class="delete"><i class="ri-delete-bin-line"></i></button></td></tr>
+                    <tr><td>Sala Desenho I</td><td>Bloco B</td><td>35</td><td>Sala de Desenho</td><td class="actions-cell"><a href="editar-sala.html"><i class="ri-pencil-line"></i></a><button class="delete"><i class="ri-delete-bin-line"></i></button></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
+

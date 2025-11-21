@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roomify - Agenda Semanal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #007BFF; --blue-dark: #0069D9; --bg-light: #F8F9FA; --bg-white: #FFFFFF;
+            --text-dark: #212529; --text-light: #6C757D; --border-color: #DEE2E6; --radius-md: 8px;
+            --radius-lg: 16px; --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --color-1: #4C6EF5; --color-2: #228BE6; --color-3: #15AABF; --color-4: #12B886;
+            --color-5: #40C057; --color-6: #82C91E; --color-7: #FAB005; --color-8: #FD7E14;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); display: flex; }
+        .sidebar {
+            width: 260px; background-color: var(--bg-white); height: 100vh;
+            display: flex; flex-direction: column; padding: 1.5rem; border-right: 1px solid var(--border-color); flex-shrink: 0;
+        }
+        .sidebar-header { display: flex; align-items: center; gap: 0.75rem; padding-left: 0.5rem; margin-bottom: 2.5rem; }
+        .sidebar-header i { font-size: 2rem; color: var(--blue); }
+        .sidebar-header h1 { font-size: 1.5rem; font-weight: 700; color: var(--text-dark); }
+        .sidebar-nav { flex-grow: 1; }
+        .sidebar-nav a {
+            display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem; border-radius: var(--radius-md); text-decoration: none;
+            color: var(--text-light); font-weight: 500; transition: all 0.2s ease;
+        }
+        .sidebar-nav a i { font-size: 1.25rem; }
+        .sidebar-nav a:hover { background-color: var(--bg-light); color: var(--text-dark); }
+        .sidebar-nav a.active { background-color: var(--blue); color: white; }
+        .main-content { flex-grow: 1; padding: 2rem; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        .agenda-controls {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem; flex-shrink: 0;
+        }
+        .week-navigation { display: flex; align-items: center; gap: 1rem; }
+        .nav-button {
+            background-color: var(--bg-white); border: 1px solid var(--border-color); width: 36px; height: 36px;
+            border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .nav-button:hover { background-color: var(--blue); color: white; border-color: var(--blue); }
+        .week-navigation h3 { font-size: 1.25rem; font-weight: 600; }
+        .filter-group { display: flex; gap: 1rem; }
+        .filter-group select {
+            padding: 0.6rem 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);
+            background-color: var(--bg-white); font-family: 'Inter', sans-serif; font-weight: 500;
+        }
+        .agenda-container { flex-grow: 1; background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: auto; }
+        .agenda-grid {
+            display: grid;
+            grid-template-columns: 100px repeat(7, 1fr); /* Fases + 7 dias */
+            grid-template-rows: 50px repeat(8, minmax(80px, 1fr)); /* Header + 8 fases */
+            min-width: 1200px;
+        }
+        .grid-cell { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0.75rem; }
+        .grid-header { font-weight: 600; text-align: center; background-color: var(--bg-light); }
+        .grid-fase { font-weight: 600; text-align: center; display: flex; align-items: center; justify-content: center; background-color: var(--bg-light); }
+        .event-card {
+            height: 100%;
+            border-radius: var(--radius-md); padding: 0.5rem; color: white;
+            display: flex; flex-direction: column; justify-content: center;
+            font-size: 0.9rem;
+        }
+        .event-card strong { font-weight: 600; display: block; }
+        .event-card span { opacity: 0.8; font-size: 0.8rem; }
+        .event-c1 { background-color: var(--color-1); } .event-c2 { background-color: var(--color-2); }
+        .event-c3 { background-color: var(--color-3); } .event-c4 { background-color: var(--color-4); }
+        .event-c5 { background-color: var(--color-5); } .event-c6 { background-color: var(--color-6); }
+        .event-c7 { background-color: var(--color-7); } .event-c8 { background-color: var(--color-8); }
+        @media (max-width: 992px) { .sidebar { display: none; } }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <header class="sidebar-header"><i class="ri-building-line"></i><h1>Roomify</h1></header>
+        <nav class="sidebar-nav">
+            <a href="index.html"><i class="ri-home-5-line"></i> Home</a>
+            <a href="agenda-semanal.html" class="active"><i class="ri-calendar-line"></i> Agenda Semanal</a>
+            <a href="atribuir-sala-1.html"><i class="ri-add-box-line"></i> Atribuir Sala</a>
+            <a href="gerenciar-materias.html"><i class="ri-book-open-line"></i> Gerenciar Matérias</a>
+            <a href="gerenciar-salas.html"><i class="ri-slideshow-3-line"></i> Gerenciar Salas</a>
+            <a href="configuracoes.html"><i class="ri-settings-3-line"></i> Configurações</a>
+        </nav>
+        <a href="login.html"><i class="ri-logout-box-r-line"></i> Sair</a>
+    </aside>
+    <main class="main-content">
+        <section class="agenda-controls">
+            <div class="week-navigation">
+                <button class="nav-button"><i class="ri-arrow-left-s-line"></i></button>
+                <h3>Setembro 08 - 14</h3>
+                <button class="nav-button"><i class="ri-arrow-right-s-line"></i></button>
+            </div>
+            <div class="filter-group">
+                <select><option>Visualizar por Curso</option></select>
+                <select><option>Todos os Blocos</option></select>
+            </div>
+        </section>
+        <div class="agenda-container">
+            <div class="agenda-grid">
+                <!-- Header Row -->
+                <div class="grid-cell grid-header"></div>
+                <div class="grid-cell grid-header">Segunda-feira</div>
+                <div class="grid-cell grid-header">Terça-feira</div>
+                <div class="grid-cell grid-header">Quarta-feira</div>
+                <div class="grid-cell grid-header">Quinta-feira</div>
+                <div class="grid-cell grid-header">Sexta-feira</div>
+                <div class="grid-cell grid-header">Sábado</div>
+                <div class="grid-cell grid-header">Domingo</div>
+                <!-- 1a Fase -->
+                <div class="grid-cell grid-fase">1ª FASE</div>
+                <div class="grid-cell"><div class="event-card event-c1"><strong>Arq de Comp</strong><span>SDI - 4215</span></div></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"><div class="event-card event-c2"><strong>Algoritmo I</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"><div class="event-card event-c3"><strong>Lógica e Algebra Linear</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div><div class="grid-cell"></div>
+                <!-- 2a Fase -->
+                <div class="grid-cell grid-fase">2ª FASE</div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"><div class="event-card event-c4"><strong>Programção I</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"><div class="event-card event-c5"><strong>Cálculo</strong><span>SDI</span></div></div>
+                <div class="grid-cell"><div class="event-card event-c2"><strong>Algoritmo II</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div><div class="grid-cell"></div>
+                <!-- 3a Fase -->
+                <div class="grid-cell grid-fase">3ª FASE</div>
+                <div class="grid-cell"><div class="event-card event-c6"><strong>Estrutura de Dados</strong><span>SDI</span></div></div>
+                <div class="grid-cell"><div class="event-card event-c7"><strong>Redes</strong><span>SDI</span></div></div>
+                <div class="grid-cell"><div class="event-card event-c8"><strong>Banco Dados I</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"><div class="event-card event-c4"><strong>Programação II</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div><div class="grid-cell"></div>
+                 <!-- 4a Fase -->
+                <div class="grid-cell grid-fase">4ª FASE</div>
+                <div class="grid-cell"><div class="event-card event-c3"><strong>UX/UI Design</strong><span>SDI</span></div></div>
+                <div class="grid-cell"><div class="event-card event-c8"><strong>Banco Dados II</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"><div class="event-card event-c5"><strong>Probabilidade</strong><span>SDI</span></div></div>
+                <div class="grid-cell"><div class="event-card event-c1"><strong>Desen. WEB I</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div><div class="grid-cell"></div>
+                 <!-- 5a Fase -->
+                <div class="grid-cell grid-fase">5ª FASE</div>
+                <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+                 <!-- 6a Fase -->
+                <div class="grid-cell grid-fase">6ª FASE</div>
+                <div class="grid-cell"><div class="event-card event-c2"><strong>Data Warehouse</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"><div class="event-card event-c6"><strong>Analise e Projeto</strong><span>SDI</span></div></div>
+                <div class="grid-cell"><div class="event-card event-c7"><strong>Sistemas Operacionais</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+                 <!-- 7a Fase -->
+                <div class="grid-cell grid-fase">7ª FASE</div>
+                <div class="grid-cell"></div><div class="grid-cell"></div>
+                <div class="grid-cell"><div class="event-card event-c4"><strong>Gerencia de Projeto</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"><div class="event-card event-c8"><strong>TCC I</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div><div class="grid-cell"></div>
+                 <!-- 8a Fase -->
+                <div class="grid-cell grid-fase">8ª FASE</div>
+                <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+                <div class="grid-cell"><div class="event-card event-c3"><strong>TCC II</strong><span>SDI</span></div></div>
+                <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

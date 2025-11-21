@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roomify - Editar Sala</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #007BFF; --blue-dark: #0069D9; --bg-light: #F8F9FA; --bg-white: #FFFFFF;
+            --text-dark: #212529; --text-light: #6C757D; --border-color: #DEE2E6; --radius-md: 8px;
+            --radius-lg: 16px; --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); display: flex; }
+        .sidebar {
+            width: 260px; background-color: var(--bg-white); height: 100vh;
+            display: flex; flex-direction: column; padding: 1.5rem; border-right: 1px solid var(--border-color); flex-shrink: 0;
+        }
+        .sidebar-header { display: flex; align-items: center; gap: 0.75rem; padding-left: 0.5rem; margin-bottom: 2.5rem; }
+        .sidebar-header i { font-size: 2rem; color: var(--blue); }
+        .sidebar-header h1 { font-size: 1.5rem; font-weight: 700; color: var(--text-dark); }
+        .sidebar-nav { flex-grow: 1; }
+        .sidebar-nav a {
+            display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem; border-radius: var(--radius-md); text-decoration: none;
+            color: var(--text-light); font-weight: 500; transition: all 0.2s ease;
+        }
+        .sidebar-nav a i { font-size: 1.25rem; }
+        .sidebar-nav a:hover { background-color: var(--bg-light); color: var(--text-dark); }
+        .sidebar-nav a.active { background-color: var(--blue); color: white; }
+        .main-content { flex-grow: 1; padding: 2rem; overflow-y: auto; height: 100vh; }
+        .main-header { margin-bottom: 2rem; }
+        .main-header h2 { font-size: 1.8rem; font-weight: 600; }
+        .main-header p { color: var(--text-light); }
+        .form-card { background-color: var(--bg-white); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); max-width: 900px; margin: auto; }
+        .form-section { margin-bottom: 2.5rem; }
+        .form-section h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--blue); }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; }
+        .form-group label span { color: var(--blue); }
+        .form-group input, .form-group select {
+            width: 100%; padding: 0.75rem; border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); font-family: 'Inter', sans-serif; font-size: 1rem; background-color: var(--bg-light);
+        }
+        .action-buttons { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; }
+        .btn { padding: 0.8rem 1.8rem; border: none; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; transition: background-color 0.2s ease; font-size: 1rem; text-decoration: none; }
+        .btn-primary { background-color: var(--blue); color: white; }
+        .btn-primary:hover { background-color: var(--blue-dark); }
+        .resource-input-group { display: flex; align-items: center; gap: 1rem; }
+        .resource-input-group input { flex-grow: 1; }
+        .resource-input-group a { color: var(--blue); text-decoration: none; font-weight: 600; white-space: nowrap; }
+        .resource-tags { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+        .tag {
+            background-color: #E6F2FF; color: var(--blue); padding: 0.5rem 1rem;
+            border-radius: 20px; font-weight: 500; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .remove-tag { background: none; border: none; color: var(--blue); cursor: pointer; font-size: 1.2rem; font-weight: 600; }
+        @media (max-width: 992px) { .sidebar { display: none; } }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <header class="sidebar-header"><i class="ri-building-line"></i><h1>Roomify</h1></header>
+        <nav class="sidebar-nav">
+            <a href="index.html"><i class="ri-home-5-line"></i> Home</a>
+            <a href="agenda-semanal.html"><i class="ri-calendar-line"></i> Agenda Semanal</a>
+            <a href="atribuir-sala-1.html"><i class="ri-add-box-line"></i> Atribuir Sala</a>
+            <a href="gerenciar-materias.html"><i class="ri-book-open-line"></i> Gerenciar Matérias</a>
+            <a href="gerenciar-salas.html" class="active"><i class="ri-slideshow-3-line"></i> Gerenciar Salas</a>
+            <a href="configuracoes.html"><i class="ri-settings-3-line"></i> Configurações</a>
+        </nav>
+        <a href="login.html"><i class="ri-logout-box-r-line"></i> Sair</a>
+    </aside>
+    <main class="main-content">
+        <header class="main-header">
+            <h2>Editar Sala</h2>
+            <p>Preencha os detalhes abaixo para atualizar as informações da sala no sistema.</p>
+        </header>
+        <form class="form-card">
+            <div class="form-section">
+                <h3>Informações da Sala</h3>
+                <div class="form-grid">
+                    <div class="form-group"><label for="room-name">Nome/número da Sala <span>*</span></label><input type="text" id="room-name" value="4206"></div>
+                    <div class="form-group"><label for="room-block">Bloco <span>*</span></label><input type="text" id="room-block" value="4"></div>
+                    <div class="form-group"><label for="room-capacity">Capacidade <span>*</span></label><input type="number" id="room-capacity" value="50"></div>
+                </div>
+                 <div class="form-group" style="margin-top: 1.5rem;"><label for="room-type">Tipo de Sala</label><select id="room-type"><option>Sala de Informatica</option></select></div>
+            </div>
+            <div class="form-section">
+                <h3>Recursos e equipamentos</h3>
+                <div class="form-group">
+                    <label for="resource-input">Dia da semana <span>*</span></label>
+                    <div class="resource-input-group">
+                        <input type="text" id="resource-input" placeholder="Digite um Recurso (Ex: Projetor, Computadores Linux...)">
+                        <a href="#" id="add-resource-btn">Adicionar</a>
+                    </div>
+                </div>
+                <div class="resource-tags" id="resource-list">
+                    <span class="tag">Ar Condicionado<button type="button" class="remove-tag">&times;</button></span>
+                    <span class="tag">Quadro Branco<button type="button" class="remove-tag">&times;</button></span>
+                </div>
+            </div>
+            <div class="action-buttons"><a href="gerenciar-salas.html" class="btn btn-primary">Salvar</a></div>
+        </form>
+    </main>
+    <script>
+        const addResourceBtn = document.getElementById('add-resource-btn');
+        const resourceInput = document.getElementById('resource-input');
+        const resourceList = document.getElementById('resource-list');
+        function addResourceTag(resourceName) {
+            if (resourceName && resourceName.trim() !== '') {
+                const tag = document.createElement('span');
+                tag.classList.add('tag');
+                tag.innerHTML = `${resourceName.trim()}<button type="button" class="remove-tag">&times;</button>`;
+                resourceList.appendChild(tag);
+                resourceInput.value = '';
+                resourceInput.focus();
+            }
+        }
+        addResourceBtn.addEventListener('click', (e) => { e.preventDefault(); addResourceTag(resourceInput.value); });
+        resourceInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); addResourceTag(resourceInput.value); } });
+        resourceList.addEventListener('click', (e) => { if (e.target && e.target.classList.contains('remove-tag')) { e.target.parentElement.remove(); } });
+    </script>
+</body>
+</html>
