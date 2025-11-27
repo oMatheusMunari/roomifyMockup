@@ -134,26 +134,31 @@
         transform: translateY(-5px);
         box-shadow: var(--shadow);
       }
-      .action-card i {
-        font-size: 1.5rem;
+
+      .reservar-sala {
+        text-decoration: none;
+      }
+      .reservar-sala i {
+        text-decoration: none;
+        font-size: 2.3rem;
         color: var(--blue);
         background-color: #e6f2ff;
-        padding: 0.75rem;
+        padding: 0.3rem;
         border-radius: var(--radius-md);
-        margin-bottom: 1rem;
       }
-      .action-card h3 {
+      .reservar-sala h3 {
+        color: var(--text-dark);
+        margin-top: 0.75rem;
         font-size: 1.1rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
       }
-      .action-card p {
+      .reservar-sala p {
         color: var(--text-light);
         font-size: 0.9rem;
         margin-bottom: 1.5rem;
       }
-      .action-card a {
-        text-decoration: none;
+      .reservar-sala span {
         color: var(--blue);
         font-weight: 600;
       }
@@ -255,27 +260,35 @@
         </div>
       </header>
       <section class="quick-actions">
-        <div class="action-card">
-          <i class="ri-add-box-line"></i>
-          <h3>Reservar uma sala</h3>
-          <p>
-            Aloque uma matéria em uma sala disponível de forma rápida e com
-            filtros inteligentes.
-          </p>
-          <a href="atribuir-sala-1.html">Começar →</a>
-        </div>
-        <div class="action-card">
-          <i class="ri-slideshow-3-line"></i>
-          <h3>Gerenciar Salas</h3>
-          <p>Adicione, edite ou remova salas e laboratórios do sistema.</p>
-          <a href="gerenciar-salas.html">Acessar →</a>
-        </div>
-        <div class="action-card">
-          <i class="ri-book-open-line"></i>
-          <h3>Gerenciar Matérias</h3>
-          <p>Cadastre e gerencie as matérias e turmas de todos os cursos.</p>
-          <a href="gerenciar-materias.html">Acessar →</a>
-        </div>
+        <a class="reservar-sala" href="atribuir-sala-1.html">
+          <div class="action-card">
+            <i class="ri-add-box-line"></i>
+            <h3>Reservar uma sala</h3>
+            <p>
+              Aloque uma matéria em uma sala disponível de forma rápida e com
+              filtros inteligentes.
+            </p>
+            <span>Começar →</span>
+          </div>
+        </a>
+
+        <a class="reservar-sala" href="gerenciar-salas.html">
+          <div class="action-card">
+            <i class="ri-slideshow-3-line"></i>
+            <h3>Gerenciar Salas</h3>
+            <p>Adicione, edite ou remova salas e laboratórios do sistema.</p>
+            <span>Acessar →</span>
+          </div>
+        </a>
+
+        <a class="reservar-sala" href="gerenciar-materias.html">
+          <div class="action-card">
+            <i class="ri-book-open-line"></i>
+            <h3>Gerenciar Matérias</h3>
+            <p>Cadastre e gerencie as matérias e turmas de todos os cursos.</p>
+            <span>Acessar →</span>
+          </div>
+        </a>
       </section>
       <section class="schedule-section">
         <div class="schedule-header">
